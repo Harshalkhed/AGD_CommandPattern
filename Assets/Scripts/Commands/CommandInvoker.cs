@@ -1,3 +1,4 @@
+using Command.Main;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,8 +24,16 @@ public class CommandInvoker
    
     public void RegisterCommand(ICommand commandToRegister)=>commandRegistry.Push(commandToRegister);
 
+    
 
+    public void Undo()
+    {
+        if (!RegistryEmpty() && CommandBelongsToActivePlayer())
+            commandRegistry.Pop().Undo();
+    }
+    private bool RegistryEmpty() => commandRegistry.Count == 0;
 
+    private bool CommandBelongsToActivePlayer() => (commandRegistry.Peek() as IUnitCommand).commandData.ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
 
 
 }
