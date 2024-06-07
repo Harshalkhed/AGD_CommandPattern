@@ -7,6 +7,7 @@ using UnityEngine;
 public class ThirdEyeCommand : IUnitCommand
 {
     private bool willHitTarget;
+    private int previousHealth;
 
     public ThirdEyeCommand(CommandData commandData)
     {
@@ -17,6 +18,19 @@ public class ThirdEyeCommand : IUnitCommand
 
     public override bool WillHitTarget() => true;
 
-    public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Meditate).PerformAction(actorUnit, targetUnit, willHitTarget);
+    public override void Execute()
+    {
+        previousHealth = targetUnit.CurrentHealth;
+        GameService.Instance.ActionService.GetActionByType(CommandType.ThirdEye).PerformAction(actorUnit, targetUnit, willHitTarget);
+    }
+    public override void Undo()
+    {
+        if (!targetUnit.IsAlive())
+            targetUnit.Revive();
 
+        int healthToRestore = (int)(previousHealth * 0.25f);
+        targetUnit.RestoreHealth(healthToRestore);
+        targetUnit.CurrentPower -= healthToRestore;
+        actorUnit.Owner.ResetCurrentActiveUnit();
+    }
 }
