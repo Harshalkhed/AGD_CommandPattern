@@ -16,5 +16,24 @@ namespace Command.Actions
         public bool IsSuccessful();
 
         public Vector3 CalculateMovePosition(UnitController targetUnit);
-    } 
+    }
+    /*
+    public enum TargetType
+    {
+        Friendly,
+        Enemy,
+        Self
+    }
+    public enum ActionType
+    {
+        None,
+        Attack,
+        Heal,
+        AttackStance,
+        Cleanse,
+        Meditate,
+        BerserkAttack,
+        ThirdEye
+    }
+    */
 }
