@@ -1,6 +1,7 @@
 using UnityEngine;
 using Command.Main;
 using Command.Actions;
+
 using System.Collections;
 using System;
 using Object = UnityEngine.Object;
@@ -144,7 +145,7 @@ namespace Command.Player
             Owner.OnUnitTurnEnded();
             unitView.SetUnitIndicator(false);
         }
-
+        public void ProcessUnitCommand(IUnitCommand commandToProcess) => GameService.Instance.CommandInvoker.ProcessCommand(commandToProcess);
         public void ResetStats() => CurrentPower = unitScriptableObject.Power;
 
         public void Revive() => SetAliveState(UnitAliveState.ALIVE);

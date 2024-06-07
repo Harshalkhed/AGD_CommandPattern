@@ -29,6 +29,13 @@ namespace Command.Player
             }
         }
 
+
+        public void ProcessUnitCommand(IUnitCommand commandToProcess)
+        {
+            GetUnitByID(commandToProcess.commandData.ActorUnitID).ProcessUnitCommand(commandToProcess);
+        }
+
+
         public void StartPlayerTurn()
         {
             activeUnitIndex = 0;

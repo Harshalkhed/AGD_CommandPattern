@@ -13,6 +13,7 @@ namespace Command.Input
         private CommandType selectedActionType;
         private TargetType targetType;
         private bool isSuccessful;
+        private CommandType selectedCommandType;
 
         public InputService()
         {
@@ -88,12 +89,13 @@ namespace Command.Input
         }
         private CommandData CreateCommandData(UnitController targetUnit)
         {
-            return CreateCommandData(
-                 GameService.Instance.PlayerService.ActiveUnitID,
-        targetUnit.UnitID,
-        GameService.Instance.PlayerService.ActivePlayerID,
-        targetUnit.Owner.PlayerID
-                );
+            
+            return new CommandData(
+                GameService.Instance.PlayerService.ActiveUnitID,
+                targetUnit.UnitID,
+                GameService.Instance.PlayerService.ActivePlayerID,
+                targetUnit.Owner.PlayerID
+            );
         }
     }
 }
