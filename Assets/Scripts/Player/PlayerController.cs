@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Command.Player
@@ -28,6 +29,13 @@ namespace Command.Player
                 units.Add(new UnitController(this, unitScriptableObjects[i], unitPositions[i]));
             }
         }
+
+
+        public void ProcessUnitCommand(IUnitCommand commandToProcess)
+        {
+            GetUnitByID(commandToProcess.commandData.ActorUnitID).ProcessUnitCommand(commandToProcess);
+        }
+
 
         public void StartPlayerTurn()
         {
@@ -83,11 +91,22 @@ namespace Command.Player
         }
 
         // TODO:    What is this??
-        public void ResetCurrentActivePlayer()
+        public void ResetCurrentActiveUnit()
         {
             units[activeUnitIndex].ResetUnitIndicator();
             activeUnitIndex--;
             units[activeUnitIndex].StartUnitTurn();
+
+            if (!units[activeUnitIndex].IsAlive())
+            {
+                activeUnitIndex--;
+            }
+            else
+            {
+                units[activeUnitIndex].StartUnitTurn();
+           
+            }
+
         }
     }
 }

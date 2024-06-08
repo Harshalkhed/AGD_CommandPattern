@@ -16,6 +16,12 @@ namespace Command.UI
         public void Show() => battleEndView.EnableView();
 
         public void Hide() => battleEndView.DisableView();
+        public void OnReplayButtonClicked()
+        {
+            GameService.Instance.ReplayService.SetReplayState(Replay.ReplayState.ACTIVE);
+            GameService.Instance.InputService.SetInputState(Input.InputState.INACTIVE);
+            GameService.Instance.EventService.OnReplayButtonClicked.InvokeEvent();
+        }
 
         public void SetWinner(int winnerId) => battleEndView.SetResultText($"Player {winnerId} Won!");
 
